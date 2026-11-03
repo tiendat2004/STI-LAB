@@ -1,0 +1,5 @@
+ROS2/ros2_ws/build/
+ROS2/ros2_ws/install/
+ROS2/ros2_ws/log/
+__pycache__/
+*.py[cod]
