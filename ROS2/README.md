@@ -1,78 +1,173 @@
 # STI-LAB
 
-Kho lưu trữ các bài thực hành, bài tập và sản phẩm trong quá trình tìm hiểu lập trình robot, phát triển giao diện và lập trình hệ thống.
+## ROS 2 CLI Cheat Sheet
 
-## Mục tiêu
-
-- Làm quen với quy trình phát triển phần mềm cho robot.
-- Rèn luyện tư duy lập trình từ cơ bản đến ứng dụng thực tế.
-- Kết hợp Python, C/C++ và các công cụ trực quan để xây dựng chương trình hoàn chỉnh.
-- Lưu trữ tài liệu, mã nguồn và kết quả thực hành theo từng chủ đề.
-
-## Nội dung tìm hiểu
-
-### 1. ROS2
-
-[Tìm hiểu về ROS2](https://docs.ros.org/en/jazzy/index.html), nền tảng middleware mã nguồn mở cho robot:
-
-- Khái niệm node, topic, service, action và message.
-- Tạo package bằng Python và C++.
-- Giao tiếp giữa các node bằng publisher/subscriber.
-- Sử dụng parameter, launch file và công cụ dòng lệnh của ROS2.
-
-Ví dụ lệnh khởi tạo workspace:
+### 1. Nodes
+```bash
+ros2 node list
+```
+Liệt kê các node đang chạy.
 
 ```bash
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws
-colcon build
-source install/setup.bash
+ros2 node info <node_name>
+```
+Xem thông tin node: topics, services, actions và parameters.
+
+### 2. Topics
+```bash
+ros2 topic list
+```
+Liệt kê các topic đang hoạt động.
+
+```bash
+ros2 topic info <topic_name> --verbose
+```
+Xem message type, số publisher/subscriber và QoS.
+
+```bash
+ros2 topic echo <topic_name>
+```
+Hiển thị dữ liệu đang được publish.
+
+```bash
+ros2 topic hz <topic_name>
+```
+Đo tần số publish của topic (Hz).
+
+```bash
+ros2 topic bw <topic_name>
+```
+Đo băng thông dữ liệu của topic.
+
+```bash
+ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist \
+"{linear: {x: 0.2}, angular: {z: 0.0}}"
+```
+Publish một message vận tốc đến `/cmd_vel`.
+
+### 3. Services
+```bash
+ros2 service list
+```
+Liệt kê các service.
+
+```bash
+ros2 service type <service_name>
+```
+Xem kiểu request/response của service.
+
+```bash
+ros2 service call <service_name> <srv_type> '<args>'
+```
+Gửi request đến service và nhận response.
+
+### 4. Parameters
+```bash
+ros2 param list
+```
+Liệt kê parameters của các node.
+
+```bash
+ros2 param get <node_name> <param_name>
+```
+Đọc giá trị parameter.
+
+```bash
+ros2 param set <node_name> <param_name> <value>
+```
+Thay đổi parameter khi node đang chạy.
+
+```bash
+ros2 param dump <node_name>
+```
+Lưu parameters của node ra file YAML.
+
+### 5. Actions
+```bash
+ros2 action list
+```
+Liệt kê các action.
+
+```bash
+ros2 action info <action_name>
+```
+Xem thông tin action và các endpoint.
+
+```bash
+ros2 action send_goal <action_name> <action_type> '<args>'
+```
+Gửi goal để thực hiện tác vụ dài hạn và nhận feedback/result.
+
+### 6. Interfaces
+```bash
+ros2 interface show <interface_type>
+```
+Xem cấu trúc message, service hoặc action.
+
+Ví dụ:
+```bash
+ros2 interface show sensor_msgs/msg/LaserScan
 ```
 
-### 2. Python
-
-[Tìm hiểu về Python](https://docs.python.org/3/), ngôn ngữ được sử dụng để phát triển nhanh các ứng dụng và node ROS2:
-
-1. Lập trình cơ bản
-2. Mở rộng
-3. Bài tập
-
-### 3. PyQt5
-
-[Tìm hiểu về PyQt5](https://www.riverbankcomputing.com/software/pyqt/), framework xây dựng giao diện đồ họa bằng Python:
-
-1. Tìm hiểu phần mềm thiết kế QT designer 5
-2. Lập trình python với QT5 designer
-3. ROS
-
-### 4. C/C++
-
-[Tìm hiểu về C](https://en.cppreference.com/w/c) và [C++](https://en.cppreference.com/w/cpp) để xây dựng các chương trình hiệu năng cao:
-
-1. Lập trình cơ bản
-
-## Lab
-
-1. Nắm chắc kiến thức cơ bản về C/C++ và Python.
-2. Thực hành các bài toán xử lý dữ liệu và điều khiển cơ bản.
-3. Xây dựng giao diện bằng PyQt5.
-4. Tìm hiểu kiến trúc và công cụ của ROS2.
-5. Kết hợp ROS2 với Python, C++ và PyQt5 trong các dự án nhỏ.
-6. Hoàn thiện, kiểm thử và ghi lại kết quả của từng bài thực hành.
-
-## Cấu trúc repository
-
-Các bài thực hành có thể được sắp xếp theo nhóm chủ đề:
-
-```text
-STI-LAB/
-├── ROS2/
-├── Python/
-├── PyQt5/
-├── C-C++/
-├── LICENSE
-└── README.md
+### 7. Launch
+```bash
+ros2 launch <package_name> <launch_file>
 ```
-## Bản quyền
+Khởi chạy nhiều node cùng lúc theo file launch.
 
-Repository được phát hành theo [MIT License](LICENSE).
+```bash
+ros2 pkg list
+```
+Liệt kê các package đã được tìm thấy.
+
+### 8. ROS 2 Bag
+```bash
+ros2 bag record /scan /odom /tf
+```
+Ghi dữ liệu từ các topic vào bag.
+
+```bash
+ros2 bag info <bag_name>
+```
+Xem thông tin file bag.
+
+```bash
+ros2 bag play <bag_name>
+```
+Phát lại dữ liệu đã ghi.
+
+### 9. DDS & Middleware
+```bash
+echo $RMW_IMPLEMENTATION
+```
+Kiểm tra middleware DDS đang sử dụng.
+
+```bash
+echo $ROS_DOMAIN_ID
+```
+Kiểm tra Domain ID hiện tại.
+
+```bash
+export ROS_DOMAIN_ID=10
+```
+Thiết lập Domain ID cho terminal hiện tại.
+
+```bash
+ros2 doctor --report
+```
+Kiểm tra và báo cáo trạng thái ROS 2.
+
+### 10. QoS (Quality of Service)
+
+```bash
+ros2 topic info /scan --verbose
+```
+Kiểm tra QoS của publisher và subscriber trên topic.
+
+Các chính sách QoS:
+- **Reliability:** `RELIABLE` đảm bảo giao nhận; `BEST_EFFORT` ưu tiên tốc độ.
+- **Durability:** `VOLATILE` không lưu dữ liệu cũ; `TRANSIENT_LOCAL` giữ dữ liệu cho subscriber mới.
+- **History:** `KEEP_LAST` giữ số mẫu giới hạn; `KEEP_ALL` giữ tất cả mẫu trong khả năng tài nguyên.
+- **Depth:** Số message được lưu trong hàng đợi.
+
+QoS giữa publisher và subscriber phải tương thích để giao tiếp thành công.
