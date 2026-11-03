@@ -1,6 +1,7 @@
 # STI-LAB
 
 Kho lưu trữ các bài thực hành, bài tập và sản phẩm trong quá trình tìm hiểu lập trình robot, phát triển giao diện và lập trình hệ thống.
+Link Docs: https://docs.google.com/spreadsheets/d/1qHSIAwnbe4TpMnCxN6Wdh9UVDbcfW4Atv8iZBbyf4UM/edit?gid=0#gid=0
 
 ## Mục tiêu
 
