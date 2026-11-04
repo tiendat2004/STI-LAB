@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+ROS2/ros2_ws/build/
+ROS2/ros2_ws/install/
+ROS2/ros2_ws/log/
